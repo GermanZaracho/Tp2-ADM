@@ -1,10 +1,18 @@
 <template>
   <v-container>
+
+    <v-row>
+      <v-col>
+        <v-alert :value="alert" dark  icon="mdi-home" transition="scale-transition">{{alertMessage}}</v-alert>
+      </v-col>
+    </v-row>
+
     <v-row>
       <v-col>
         <v-card class="mx-auto" max-width="400">
-          <v-img class="white--text align-end" contain height="100" :src="require('../assets/logo.svg')">
-          </v-img>
+
+          <v-img class="white--text align-end" contain height="100" :src="require('../assets/logo.svg')"></v-img>
+
           <v-card-text>
             <v-form>
               <v-row justify="center">
@@ -15,32 +23,20 @@
               </v-row>
             </v-form>
           </v-card-text>
+
           <v-card-actions>
             <v-row justify="center">
               <v-col>
-                <v-btn color="orange" text @click="validation">
-                  Iniciar sesión
-                </v-btn>
-
-                <v-btn color="orange" text>
-                  Registrarse
-                </v-btn>
-
+                <v-btn text @click="validation">Iniciar sesión</v-btn>
+                <v-btn text>Registrarse</v-btn>
               </v-col>
             </v-row>
           </v-card-actions>
+
         </v-card>
       </v-col>
-      <template>
-      </template>
     </v-row>
-    <v-row>
-      <v-col>
-        <v-alert :value="alert" color="pink" dark border="top" icon="mdi-home" transition="scale-transition">
-            {{mensajeAlert}}
-        </v-alert>
-      </v-col>
-    </v-row>
+
   </v-container>
 </template>
 
@@ -49,28 +45,28 @@ export default {
   name: 'HelloWorld',
   data: () => {
     return {
-      email: "",
-      password: "",
       success: false,
       alert: false,
-      mensajeAlert: ""
+      alertMessage: "",
+      email: "",
+      password: ""
     }
   },
   methods: {
     validation(e){
       this.alert = false;
       this.success = false;
-      this.mensajeAlert = "";
+      this.alertMessage = "";
       console.log(e)
       if(!this.email) {
-        this.mensajeAlert += " Ingrese un E-mail. ";
+        this.alertMessage += "  Ingrese un E-mail. ";
         this.alert = true;
       }
       if(!this.password) {
-        this.mensajeAlert += " Ingrese un Password. ";
+        this.alertMessage += " Ingrese un Password. ";
         this.alert = true;
       }
-      if(!this.mensajeAlert) {
+      if(!this.alertMessage) {
         this.success = true;
         localStorage.setItem("login", "true");
         this.$router.push("/home");

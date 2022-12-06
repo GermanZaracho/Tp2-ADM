@@ -2,13 +2,14 @@
   <div class="home-coming">
     <button v-on:click="logout">Cerrar Sesion</button>
     <v-app>
-      <AddNote />
+      <AddNote/>
     </v-app>
   </div>
 
 </template>
 <script>
 import AddNote from '../components/AddNote.vue'
+
 export default {
   name: 'home-coming',
   components: {
