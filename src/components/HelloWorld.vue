@@ -1,151 +1,96 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
+    <v-row>
+      <v-col>
+        <v-card class="mx-auto" max-width="400">
+          <v-img class="white--text align-end" contain height="100" :src="require('../assets/logo.svg')">
+          </v-img>
+          <v-card-text>
+            <v-form>
+              <v-row justify="center">
+                <v-col cols="12" sm="6" md="10">
+                  <v-text-field v-model="email" label="Email" placeholder="Email"></v-text-field>
+                  <v-text-field v-model="password" label="Password" placeholder="Password"></v-text-field>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-row justify="center">
+              <v-col>
+                <v-btn color="orange" text @click="validation">
+                  Iniciar sesión
+                </v-btn>
+
+                <v-btn color="orange" text>
+                  Registrarse
+                </v-btn>
+
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
       </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
+      <template>
+      </template>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-alert :value="alert" color="pink" dark border="top" icon="mdi-home" transition="scale-transition">
+            {{mensajeAlert}}
+        </v-alert>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-  export default {
-    name: 'HelloWorld',
-
-    data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
-    }),
+export default {
+  name: 'HelloWorld',
+  data: () => {
+    return {
+      email: "",
+      password: "",
+      success: false,
+      alert: false,
+      mensajeAlert: ""
+    }
+  },
+  methods: {
+    validation(e){
+      this.alert = false;
+      this.success = false;
+      this.mensajeAlert = "";
+      console.log(e)
+      if(!this.email) {
+        this.mensajeAlert += " Ingrese un E-mail. ";
+        this.alert = true;
+      }
+      if(!this.password) {
+        this.mensajeAlert += " Ingrese un Password. ";
+        this.alert = true;
+      }
+      if(!this.mensajeAlert) {
+        this.success = true;
+        localStorage.setItem("login", "true");
+        this.$router.push("/home");
+      }
+      setTimeout(()=> {
+        this.success = false;
+        this.alert = false;
+      }, 1500);
+    }
   }
+}
 </script>
+
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+.mx-auto {
+  padding-top: 10px;
+}
+</style>
